@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import FormattedDate from "./FormattedDate";
 import "./Weather.css";
 
 export default function Weather(props) {
@@ -13,6 +14,7 @@ export default function Weather(props) {
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
       city: response.data.name,
+      date: new Date(response.data.dt * 1000),
     });
   }
   if (weatherData.ready) {
@@ -38,7 +40,10 @@ export default function Weather(props) {
             </div>
             <h1>{props.city}</h1>
             <ul>
-              <li>Tuesday 13:00</li>
+              <li>
+                {" "}
+                <FormattedDate date={weatherData.date} />
+              </li>
               <li className="text-capitalize">{weatherData.description}</li>
             </ul>
             <div className="row">
@@ -64,7 +69,7 @@ export default function Weather(props) {
       </div>
     );
   } else {
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${props.city}&appid=6ce35ed588ab9855033b23ac0dbfd433&units=metric`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${props.city}&appid=81816ad955060b90cb48be234d7ed923&units=metric`;
     axios.get(url).then(displayWeather);
     return "Loading...";
   }
