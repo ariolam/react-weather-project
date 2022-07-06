@@ -6,6 +6,7 @@ import "./Weather.css";
 
 export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });
+  const [city, setCity] = useState(props.city);
 
   function displayWeather(response) {
     setWeatherData({
@@ -18,11 +19,24 @@ export default function Weather(props) {
       date: new Date(response.data.dt * 1000),
     });
   }
+
+  function search() {
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=81816ad955060b90cb48be234d7ed923&units=metric`;
+    axios.get(url).then(displayWeather);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    search();
+  }
+  function changeCity(event) {
+    setCity(event.target.value);
+  }
   if (weatherData.ready) {
     return (
       <div className="Weather">
         {" "}
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-9">
               <input
@@ -30,6 +44,7 @@ export default function Weather(props) {
                 placeholder="Enter a city..."
                 autoFocus="on"
                 className="form-control"
+                onChange={changeCity}
               />
             </div>
             <div className="col-3">
@@ -45,8 +60,7 @@ export default function Weather(props) {
       </div>
     );
   } else {
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${props.city}&appid=81816ad955060b90cb48be234d7ed923&units=metric`;
-    axios.get(url).then(displayWeather);
+    search();
     return "Loading...";
   }
 }
