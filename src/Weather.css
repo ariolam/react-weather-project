@@ -17,7 +17,7 @@
   line-height: 19px;
   list-style: none;
 }
-.Weather img {
+.Weather canvas {
   margin: 10px auto;
 }
 .Weather .temperature {
