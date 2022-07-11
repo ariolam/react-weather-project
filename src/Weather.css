@@ -19,13 +19,13 @@
 }
 .Weather canvas {
   margin: 10px auto;
+  margin-bottom: -6px;
 }
 .Weather .temperature {
   font-weight: 400;
   color: #212121;
   font-size: 64px;
   line-height: 64px;
-  margin-left: 10px;
 }
 .Weather .units {
   color: #212121;
